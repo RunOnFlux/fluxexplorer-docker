@@ -2,7 +2,7 @@ FROM debian:buster-slim
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && \
-apt-get install -y wget curl jq lsb-release gnupg dirmngr tar
+apt-get install -y wget curl jq lsb-release gnupg dirmngr tar pv
 
 RUN echo 'deb https://apt.runonflux.io/ '$(lsb_release -cs)' main' | tee --append /etc/apt/sources.list.d/flux.list && \
 gpg --keyserver keyserver.ubuntu.com --recv 4B69CA27A986265D && \
