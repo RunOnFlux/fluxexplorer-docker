@@ -131,21 +131,21 @@ addnode=78.113.97.147:16125
 addnode=209.145.49.181:16125
 EOF
 
-DB_HIGHT=$(curl -s -m 10 https://fluxnodeservice.com/daemon_bootstrap.json | jq -r '.block_height')
-if [[ "$DB_HIGHT" == "" ]]; then
-    DB_HIGHT=$(curl -s -m 10 https://fluxnodeservice.com/daemon_bootstrap.json | jq -r '.block_height')
-fi
+#DB_HIGHT=$(curl -s -m 10 https://fluxnodeservice.com/daemon_bootstrap.json | jq -r '.block_height')
+#if [[ "$DB_HIGHT" == "" ]]; then
+#    DB_HIGHT=$(curl -s -m 10 https://fluxnodeservice.com/daemon_bootstrap.json | jq -r '.block_height')
+#fi
 		
-if [[ "$DB_HIGHT" != "" ]]; then  
-    echo -e
-    echo -e "${ARROW} ${CYAN}Flux daemon bootstrap height: ${GREEN}$DB_HIGHT${NC}"
-    echo -e "${ARROW} ${YELLOW}Downloading File: ${GREEN}$BOOTSTRAP_ZIP ${NC}"
-    wget --tries 5 -O $BOOTSTRAP_ZIPFILE $BOOTSTRAP_ZIP -q --show-progress
-    tar_file_unpack "/root/bitcore-node/bin/mynode/data/$BOOTSTRAP_ZIPFILE" "/root/bitcore-node/bin/mynode/data" 
-    echo -e 
-    rm -rf /root/bitcore-node/bin/mynode/data/$BOOTSTRAP_ZIPFILE
-    sleep 2
-fi
+#if [[ "$DB_HIGHT" != "" ]]; then  
+ #   echo -e
+ #   echo -e "${ARROW} ${CYAN}Flux daemon bootstrap height: ${GREEN}$DB_HIGHT${NC}"
+ #   echo -e "${ARROW} ${YELLOW}Downloading File: ${GREEN}$BOOTSTRAP_ZIP ${NC}"
+  #  wget --tries 5 -O $BOOTSTRAP_ZIPFILE $BOOTSTRAP_ZIP -q --show-progress
+ #   tar_file_unpack "/root/bitcore-node/bin/mynode/data/$BOOTSTRAP_ZIPFILE" "/root/bitcore-node/bin/mynode/data" 
+  #  echo -e 
+ #   rm -rf /root/bitcore-node/bin/mynode/data/$BOOTSTRAP_ZIPFILE
+ #   sleep 2
+#fi
 
 cd /root/bitcore-node/bin/mynode/node_modules
 git clone https://github.com/runonflux/insight-api
