@@ -3,7 +3,7 @@
 - Flux Daemon
 - Insight-API
 - Insight-UI
-- Bitcore
+- Bitcore-Node
 - MongoDB installed separatly as other component
 
 
