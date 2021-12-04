@@ -142,6 +142,7 @@ if [[ "$DB_HIGHT" != "" ]]; then
     echo -e "${ARROW} ${YELLOW}Downloading File: ${GREEN}$BOOTSTRAP_ZIP ${NC}"
     wget --tries 5 -O $BOOTSTRAP_ZIPFILE $BOOTSTRAP_ZIP -q --show-progress
     tar_file_unpack "/root/bitcore-node/bin/mynode/data/$BOOTSTRAP_ZIPFILE" "/root/bitcore-node/bin/mynode/data" 
+    echo -e 
     rm -rf /root/bitcore-node/bin/mynode/data/$BOOTSTRAP_ZIPFILE
     sleep 2
 fi
