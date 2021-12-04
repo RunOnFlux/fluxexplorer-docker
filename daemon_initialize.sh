@@ -49,7 +49,7 @@ cat << EOF > bitcore-node.json
     "insight-api": {
         "routePrefix": "api",
                  "db": {
-                   "host": "fluxexplorermongodb",
+                   "host": "fluxmongodb_fluxexplorer",
                    "port": "27017",
                    "database": "flux-api-livenet",
                    "user": "",
