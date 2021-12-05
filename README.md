@@ -1,4 +1,4 @@
-# FLUX EXPLORER
+# FLUX INSIGHT EXPLORER
 <b> COMPONENT LIST: </b>
 - Flux Daemon
 - Insight-API
