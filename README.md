@@ -6,7 +6,7 @@
 - Bitcore-Node
 - MongoDB installed separatly as other component
 
-Environment Parameters:
-BOOTSTRAP=1 - enable flux explorer daemon bootstrap
+<b>Environment Parameters:</b>
+- BOOTSTRAP=1 - enable flux explorer daemon bootstrap
 
 
