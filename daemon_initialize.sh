@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-# install needed dependencies
-
 #color codes
 RED='\033[1;31m'
 YELLOW='\033[1;33m'
@@ -144,7 +142,7 @@ if [[ "$BOOTSTRAP" == "1" ]]; then
     echo -e
     echo -e "${ARROW} ${CYAN}Flux daemon bootstrap height: ${GREEN}$DB_HIGHT${NC}"
     echo -e "${ARROW} ${YELLOW}Downloading File: ${GREEN}$BOOTSTRAP_ZIP ${NC}"
-    wget --tries 5 -O $BOOTSTRAP_ZIPFILE $BOOTSTRAP_ZIP -q --show-progress
+    wget --tries 5 -O $BOOTSTRAP_ZIPFILE $BOOTSTRAP_ZIP -q --no-verbose --show-progress --progress=dot:giga > /dev/null 2>&1
     tar_file_unpack "/root/bitcore-node/bin/mynode/data/$BOOTSTRAP_ZIPFILE" "/root/bitcore-node/bin/mynode/data"
     rm -rf /root/bitcore-node/bin/mynode/data/$BOOTSTRAP_ZIPFILE
     sleep 2
@@ -165,7 +163,7 @@ fi
 
 cd /root/bitcore-node/bin/mynode
 while true; do
-echo -e "${ARROW} ${YELLOW}Starting flux explorer...${NC}"
+echo -e "${ARROW} ${YELLOW}Starting flux insight explorer...${NC}"
 echo -e
 ../bitcore-node start
 sleep 60
