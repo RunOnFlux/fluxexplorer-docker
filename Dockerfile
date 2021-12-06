@@ -16,5 +16,5 @@ COPY check-health.sh /check-health.sh
 VOLUME /root/bitcore-node
 EXPOSE 3001/tcp
 RUN chmod 755 daemon_initialize.sh check-health.sh
-HEALTHCHECK --start-period=5m --interval=2m --retries=5 --timeout=15s CMD ./check-health.sh
+HEALTHCHECK --start-period=15m --interval=2m --retries=5 --timeout=15s CMD ./check-health.sh
 CMD ./daemon_initialize.sh
