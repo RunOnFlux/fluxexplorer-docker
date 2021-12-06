@@ -31,23 +31,24 @@ function tar_file_unpack()
 
 
 if [[ ! -d /root/bitcore-node/bin ]]; then
-curl -sL https://deb.nodesource.com/setup_8.x | bash -
-apt-get install -y nodejs
-apt-get install -y build-essential
-apt-get install -y libzmq3-dev
-apt-get install -y npm git
+
+echo -e "${ARROW} ${YELLOW}Installing dependencies...${NC}"
+curl -sL https://deb.nodesource.com/setup_8.x | bash - > /dev/null 2>&1
+apt-get install -y nodejs build-essential libzmq3-dev npm git > /dev/null 2>&1
 
 #bitcore-node
 cd /root/
 bash flux-fetch-params.sh > /dev/null 2>&1 && sleep 2
-git clone https://github.com/runonflux/bitcore-node
+echo -e "${ARROW} ${YELLOW}Installing bitcore-node...${NC}"
+git clone https://github.com/runonflux/bitcore-node > /dev/null 2>&1
 cd bitcore-node
-npm install
+npm install > /dev/null 2>&1
 cd bin
 chmod +x bitcore-node
-./bitcore-node create mynode
+./bitcore-node create mynode > /dev/null 2>&1
 cd mynode
 rm bitcore-node.json
+echo -e "${ARROW} ${YELLOW}Creating bitcore-node config file...${NC}"
 cat << EOF > bitcore-node.json
 {
   "network": "livenet",
@@ -78,7 +79,7 @@ cat << EOF > bitcore-node.json
     "insight-api": {
         "routePrefix": "api",
                  "db": {
-                   "host": "fluxmongodb_explorerflux",
+                   "host": "explorermongo",
                    "port": "27017",
                    "database": "flux-api-livenet",
                    "user": "",
@@ -97,6 +98,7 @@ EOF
 cp /usr/local/bin/fluxd /root/bitcore-node/bin/fluxd
 chmod +x /root/bitcore-node/bin/fluxd
 cd data
+echo -e "${ARROW} ${YELLOW}Creating flux daemon config file...${NC}"
 cat << EOF > flux.conf
 server=1
 whitelist=127.0.0.1
@@ -140,31 +142,31 @@ if [[ "$BOOTSTRAP" == "1" ]]; then
 
   if [[ "$DB_HIGHT" != "" ]]; then
     echo -e
-    echo -e "${ARROW} ${CYAN}Flux daemon explorer bootstrap height: ${GREEN}$DB_HIGHT${NC}"
+    echo -e "${ARROW} ${CYAN}Flux daemon bootstrap height: ${GREEN}$DB_HIGHT${NC}"
     echo -e "${ARROW} ${YELLOW}Downloading File: ${GREEN}$BOOTSTRAP_ZIP ${NC}"
     wget --tries 5 -O $BOOTSTRAP_ZIPFILE $BOOTSTRAP_ZIP -q --show-progress
     tar_file_unpack "/root/bitcore-node/bin/mynode/data/$BOOTSTRAP_ZIPFILE" "/root/bitcore-node/bin/mynode/data"
     rm -rf /root/bitcore-node/bin/mynode/data/$BOOTSTRAP_ZIPFILE
-    echo -e
     sleep 2
   fi
-  
+
 fi
 
-
 cd /root/bitcore-node/bin/mynode/node_modules
-git clone https://github.com/runonflux/insight-api
-git clone https://github.com/runonflux/insight-ui
+echo -e "${ARROW} ${YELLOW}Installing insight-api && insight-ui...${NC}"
+git clone https://github.com/runonflux/insight-api > /dev/null 2>&1
+git clone https://github.com/runonflux/insight-ui > /dev/null 2>&1
 cd insight-api
-npm install
+npm install > /dev/null 2>&1
 cd ..
 cd insight-ui
-npm install
+npm install > /dev/null 2>&1
 fi
 
 cd /root/bitcore-node/bin/mynode
 while true; do
-echo -e "Starting flux explorer...."
+echo -e "${ARROW} ${YELLOW}Starting flux explorer...${NC}"
+echo -e
 ../bitcore-node start
 sleep 60
 done
