@@ -6,10 +6,13 @@
 - Bitcore-Node
 - MongoDB installed separatly as other component
 
-<b>Environment Parameters:</b>
-- BOOTSTRAP=1 - enable flux explorer daemon bootstrap
+### Environment Variables
 
-<b>Notice:</b>
-```Name of mongo continer must be fluxmongodb_explorerflux```
+To customize some properties of the container, the following environment
+variables can be passed via the `-e` parameter (one for each variable).  Value
+of this parameter has the format `<VARIABLE_NAME>=<VALUE>`.
 
+| Variable       | Description                                  | Default |
+|----------------|----------------------------------------------|---------|
+|`BOOTSTRAP`| When set to ```1```, application will download and unpack bootstrap archive for flux daemon. | (unset) |
 
