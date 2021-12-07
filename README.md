@@ -16,3 +16,5 @@ of this parameter has the format `<VARIABLE_NAME>=<VALUE>`.
 |----------------|----------------------------------------------|---------|
 |`BOOTSTRAP`| When set to ```1```, application will download and unpack bootstrap archive for flux daemon. | (unset) |
 
+<b>Notice:</b>
+```Name of mongo continer must be fluxmongodb_explorerflux```
