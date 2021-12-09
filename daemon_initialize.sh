@@ -47,6 +47,14 @@ chmod +x bitcore-node
 cd mynode
 rm bitcore-node.json
 echo -e "${ARROW} ${YELLOW}Creating bitcore-node config file...${NC}"
+
+if [[ "$DB_COMPONENT_NAME" == "" ]]; then
+echo -e "${ARROW} ${CYAN}Set default value of DB_COMPONENT_NAME as host...${NC}"
+DB_COMPONENT_NAME="fluxmongodb_explorerflux"
+else
+echo -e "${ARROW} ${CYAN}DB_COMPONENT_NAME as host is ${GREEN}${DB_COMPONENT_NAME}${NC}"
+fi
+
 cat << EOF > bitcore-node.json
 {
   "network": "livenet",
@@ -77,7 +85,7 @@ cat << EOF > bitcore-node.json
     "insight-api": {
         "routePrefix": "api",
                  "db": {
-                   "host": "fluxmongodb_explorerflux",
+                   "host": "${DB_COMPONENT_NAME}",
                    "port": "27017",
                    "database": "flux-api-livenet",
                    "user": "",
