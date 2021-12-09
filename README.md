@@ -1,5 +1,5 @@
 # FLUX INSIGHT EXPLORER
-<b> COMPONENT LIST: </b>
+<b> DOCKER COMPONENT LIST: </b>
 - Flux Daemon
 - Insight-API
 - Insight-UI
