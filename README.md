@@ -5,7 +5,7 @@
 - Insight-UI
 - Bitcore-Node
 
-- MongoDB installed separatly as independent component
+<br>MongoDB installed separatly as independent component
 
 ### Environment Variables
 
