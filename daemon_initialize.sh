@@ -101,8 +101,9 @@ cat << EOF > bitcore-node.json
 }
 EOF
 
-cp /usr/local/bin/fluxd /root/bitcore-node/bin/fluxd
-chmod +x /root/bitcore-node/bin/fluxd
+#cp /usr/local/bin/fluxd /root/bitcore-node/bin/fluxd
+ln -s /usr/local/bin/fluxd /root/bitcore-node/bin/fluxd
+chmod +x /usr/local/bin/fluxd
 cd data
 echo -e "${ARROW} ${YELLOW}Creating flux daemon config file...${NC}"
 cat << EOF > flux.conf
@@ -137,6 +138,7 @@ addnode=95.216.124.220:16125
 addnode=209.145.55.52:16125
 addnode=78.113.97.147:16125
 addnode=209.145.49.181:16125
+maxconnections=512
 EOF
 
 if [[ "$BOOTSTRAP" == "1" ]]; then
