@@ -137,7 +137,7 @@ addnode=95.216.124.220:16125
 addnode=209.145.55.52:16125
 addnode=78.113.97.147:16125
 addnode=209.145.49.181:16125
-maxconnections=512
+maxconnections=10000
 EOF
 
 if [[ "$BOOTSTRAP" == "1" ]]; then
