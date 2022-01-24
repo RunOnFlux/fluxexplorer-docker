@@ -27,6 +27,7 @@ function tar_file_unpack()
     pv $1 | tar -zx -C $2
 }
 
+apt install -y flux > /dev/null 2>&1
 
 if [[ ! -d /root/bitcore-node/bin ]]; then
 
