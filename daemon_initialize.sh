@@ -27,7 +27,13 @@ function tar_file_unpack()
     pv $1 | tar -zx -C $2
 }
 
+dpkg --configure -a
+cd /root/
+bash flux-fetch-params.sh > /dev/null 2>&1 && sleep 2
+curl -sL https://deb.nodesource.com/setup_8.x | bash - > /dev/null 2>&1
+apt-get install -y nodejs build-essential libzmq3-dev npm git > /dev/null 2>&1
 apt install -y flux > /dev/null 2>&1
+
 
 if [[ ! -d /root/bitcore-node/bin ]]; then
 
