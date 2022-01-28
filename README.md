@@ -19,4 +19,4 @@ of this parameter has the format `<VARIABLE_NAME>=<VALUE>`.
 |`DB_COMPONENT_NAME`| Name of mongo host for insight-api. | `fluxmongodb_explorerflux` |
  - Name of mongo continer must be same as `DB_COMPONENT_NAME`
 
-v5.2.0
+v5.2.1
