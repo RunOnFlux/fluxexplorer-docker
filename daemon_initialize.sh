@@ -18,7 +18,7 @@ BOOK="${RED}\xF0\x9F\x93\x8B${NC}"
 HOT="${ORANGE}\xF0\x9F\x94\xA5${NC}"
 WORNING="${RED}\xF0\x9F\x9A\xA8${NC}"
 
-BOOTSTRAP_ZIP='https://cdn-4.runonflux.io/apps/fluxshare/getfile/flux_explorer_bootstrap.tar.gz'
+BOOTSTRAP_ZIP='https://cdn-3.runonflux.io/apps/fluxshare/getfile/flux_explorer_bootstrap.tar.gz'
 BOOTSTRAP_ZIPFILE='flux_explorer_bootstrap.tar.gz'
 
 function tar_file_unpack()
