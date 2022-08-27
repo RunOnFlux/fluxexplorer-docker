@@ -146,9 +146,9 @@ EOF
 
   if [[ "$BOOTSTRAP" == "1" ]]; then
 
-    DB_HIGHT=$(curl -s -m 10 https://fluxnodeservice.com/flux_explorer_bootstrap.json | jq -r '.block_height')
+    DB_HIGHT=$(curl -s -m 10 https://cdn-3.runonflux.io/apps/fluxshare/getfile/flux_explorer_bootstrap.json | jq -r '.block_height')
     if [[ "$DB_HIGHT" == "" ]]; then
-        DB_HIGHT=$(curl -s -m 10 https://fluxnodeservice.com/flux_explorer_bootstrap.json | jq -r '.block_height')
+        DB_HIGHT=$(curl -s -m 10 https://cdn-3.runonflux.io/apps/fluxshare/getfile/flux_explorer_bootstrap.json | jq -r '.block_height')
     fi
 
     if [[ "$DB_HIGHT" != "" ]]; then
