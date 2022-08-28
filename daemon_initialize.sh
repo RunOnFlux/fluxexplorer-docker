@@ -226,7 +226,7 @@ EOF
     cdn_speedtest "0" "6"
     if [[ "$server_offline" == "1" ]]; then
       echo -e "${WORNING} ${CYAN}All Bootstrap server offline, operation aborted.. ${NC}" && sleep 1
-	else
+    else
       echo -e "${ARROW} ${YELLOW}Downloading File: ${GREEN}$DOWNLOAD_URL ${NC}"
       wget --tries 5 -O $BOOTSTRAP_FILE $DOWNLOAD_URL -q --no-verbose --show-progress --progress=dot:giga > /dev/null 2>&1
       tar_file_unpack "/root/bitcore-node/bin/mynode/data/$BOOTSTRAP_FILE" "/root/bitcore-node/bin/mynode/data"
