@@ -17,7 +17,7 @@ of this parameter has the format `<VARIABLE_NAME>=<VALUE>`.
 |----------------|----------------------------------------------|---------|
 |`BOOTSTRAP`| When set to ```1```, application will download and unpack bootstrap archive for flux daemon. | (unset) |
 |`DB_COMPONENT_NAME`| Name of mongo host for insight-api. | `fluxmongodb_explorerflux` |
-|`TESTNET`| Testnet network enable 1 , disable 0. Disabled by default | `0` |
+|`TESTNET`| Testnet network enable 1, disable 0. Disabled by default | `0` |
  - Name of mongo continer must be same as `DB_COMPONENT_NAME`
 
 v5.2.1
