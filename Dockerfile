@@ -2,6 +2,7 @@ FROM debian:buster-slim
 ENV DEBIAN_FRONTEND noninteractive
 LABEL com.centurylinklabs.watchtower.enable="true"
 
+ENV TESTNET=${TESTNET:-0}
 RUN apt-get update && \
 apt-get install -y wget curl jq lsb-release gnupg dirmngr tar pv bc
 

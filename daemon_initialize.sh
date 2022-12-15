@@ -132,6 +132,12 @@ else
   cd mynode
   rm bitcore-node.json
   echo -e "${ARROW} ${YELLOW}Creating bitcore-node config file...${NC}"
+  
+  if [[ "$TESTNET" == "1" ]]; then
+    NETWORK="testnet"
+  else
+    NETWORK="livenet"
+  fi
 
   if [[ "$DB_COMPONENT_NAME" == "" ]]; then
   echo -e "${ARROW} ${CYAN}Set default value of DB_COMPONENT_NAME as host...${NC}"
@@ -142,7 +148,7 @@ else
 
 cat << EOF > bitcore-node.json
 {
-  "network": "livenet",
+  "network": "${NETWORK}",
   "port": 3001,
   "services": [
     "bitcoind",
@@ -172,7 +178,7 @@ cat << EOF > bitcore-node.json
                 "db": {
                   "host": "${DB_COMPONENT_NAME}",
                   "port": "27017",
-                  "database": "flux-api-livenet",
+                  "database": "flux-api-${NETWORK}",
                   "user": "",
                   "password": ""
           },
@@ -214,12 +220,18 @@ dbcache=1000
 maxtxfee=1.0
 dbmaxfilesize=64
 showmetrics=0
-addnode=explorer.zelcash.online
-addnode=explorer.runonflux.io
-addnode=blockbook.runonflux.io
-addnode=explorer.flux.zelcore.io
 maxconnections=10000
 EOF
+
+  if [[ "$TESTNET" == "1" ]]; then
+    echo -e "testnet=1" >> flux.conf
+    echo -e "addnode=testnet.runonflux.io" >> flux.conf
+  else
+   echo -e "addnode=explorer.zelcash.online" >> flux.conf
+   echo -e "addnode=explorer.runonflux.io" >> flux.conf
+   echo -e "addnode=blockbook.runonflux.io" >> flux.conf
+   echo -e "addnode=explorer.flux.zelcore.io" >> flux.conf
+  fi
 
   if [[ "$BOOTSTRAP" == "1" ]]; then
     echo -e ""
