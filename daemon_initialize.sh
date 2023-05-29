@@ -118,7 +118,7 @@ DBDIR="/data/bitcore-node/bin"
 if [ -d $DBDIR ]; then
   echo "Directory $DBDIR already exists, we will not download bootstrap. Use hard redeploy if you want to apply a new bootstrap."
 else
-  echo -e "${ARROW} ${YELLOW}Installing dependencies...${NC}"
+  #echo -e "${ARROW} ${YELLOW}Installing dependencies...${NC}"
   #curl -sL https://deb.nodesource.com/setup_8.x | bash - > /dev/null 2>&1
   #apt-get install -y nodejs build-essential libzmq3-dev npm git > /dev/null 2>&1
   #bitcore-node
