@@ -110,7 +110,7 @@ cd /data
 #bash flux-fetch-params.sh > /dev/null 2>&1 && sleep 2
 #curl -sL https://deb.nodesource.com/setup_8.x | bash - > /dev/null 2>&1
 #apt-get install -y nodejs build-essential libzmq3-dev npm git > /dev/null 2>&1
-apt update -y
+apt update -y > /dev/null 2>&1
 apt install -y flux > /dev/null 2>&1
 
 
