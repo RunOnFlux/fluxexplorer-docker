@@ -14,7 +14,7 @@ apt-get install -y flux
 
 RUN touch ~/.bashrc && chmod +x ~/.bashrc
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-RUN . ~/.nvm/nvm.sh && source ~/.bashrc && nvm install 8
+RUN /bin/bash -c "chmod +x ~/.nvm/nvm.sh && ~/.nvm/nvm.sh && source ~/.bashrc && nvm install 8"
 
 RUN mkdir -p /root/bitcore-node
 COPY daemon_initialize.sh /daemon_initialize.sh
