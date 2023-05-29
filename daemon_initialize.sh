@@ -125,7 +125,7 @@ else
   echo -e "${ARROW} ${YELLOW}Installing bitcore-node...${NC}"
   git clone https://github.com/runonflux/bitcore-node > /dev/null 2>&1
   cd bitcore-node
-  npm install
+  npm install > /dev/null 2>&1
   cd bin
   chmod +x bitcore-node
   ./bitcore-node create mynode > /dev/null 2>&1
