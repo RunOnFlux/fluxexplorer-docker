@@ -35,4 +35,4 @@ RUN mkdir -p /data
 VOLUME /data
 EXPOSE 3001/tcp
 HEALTHCHECK --start-period=15m --interval=2m --retries=5 --timeout=15s CMD ./check-health.sh
-CMD ./daemon_initialize.sh
+CMD ["bash", "-c", "./daemon_initialize.sh"]
