@@ -18,8 +18,11 @@ RUN mkdir -p /usr/share/keyrings root/.gnupg  && \
     
 RUN /bin/bash -c "flux-fetch-params.sh"
 RUN touch ~/.bashrc && chmod +x ~/.bashrc
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-RUN /bin/bash -c "chmod +x ~/.nvm/nvm.sh && ~/.nvm/nvm.sh && source ~/.bashrc && nvm install 12"
+# Ensure you install nvm properly
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash && \
+    export NVM_DIR="$HOME/.nvm" && \
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
+    nvm install 12
 COPY daemon_initialize.sh /daemon_initialize.sh
 COPY check-health.sh /check-health.sh
 RUN chmod 755 daemon_initialize.sh check-health.sh
