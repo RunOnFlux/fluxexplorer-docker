@@ -20,4 +20,4 @@ of this parameter has the format `<VARIABLE_NAME>=<VALUE>`.
 |`TESTNET`| Testnet network enable 1, disable 0. Disabled by default | `0` |
  - Name of mongo continer must be same as `DB_COMPONENT_NAME`
 
-v5.2.1
+v5.3
