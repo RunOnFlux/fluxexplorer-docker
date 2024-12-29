@@ -1,17 +1,21 @@
-FROM debian:buster-slim
+FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND noninteractive
 LABEL com.centurylinklabs.watchtower.enable="true"
 
 ENV TESTNET=${TESTNET:-0}
 
-RUN apt-get update && \
-apt-get install -y wget curl jq lsb-release gnupg dirmngr tar pv bc build-essential libzmq3-dev git
+# Install required dependencies
+RUN apt-get update && apt-get install -y \
+    wget curl jq gnupg lsb-release dirmngr tar pv pwgen dirmngr tar pv bc build-essential libzmq3-dev git && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN echo 'deb https://apt.runonflux.io/ '$(lsb_release -cs)' main' | tee --append /etc/apt/sources.list.d/flux.list && \
-gpg --keyserver keyserver.ubuntu.com --recv 4B69CA27A986265D && \
-gpg --export 4B69CA27A986265D | apt-key add - && \
-apt-get update && \
-apt-get install -y flux
+# Add the Flux repository and import GPG key
+RUN mkdir -p /usr/share/keyrings root/.gnupg  && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/flux-archive-keyring.gpg] https://apt.runonflux.io/ focal main" | tee /etc/apt/sources.list.d/flux.list > /dev/null && \
+    gpg --no-default-keyring --keyring /usr/share/keyrings/flux-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 4B69CA27A986265D && \
+    apt-get update && \
+    apt-get install -y flux
+    
 RUN /bin/bash -c "flux-fetch-params.sh"
 RUN touch ~/.bashrc && chmod +x ~/.bashrc
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
