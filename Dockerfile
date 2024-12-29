@@ -19,15 +19,14 @@ RUN mkdir -p /usr/share/keyrings root/.gnupg  && \
 RUN /bin/bash -c "flux-fetch-params.sh"
 RUN touch ~/.bashrc && chmod +x ~/.bashrc
 # Ensure you install nvm properly
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash && \
-    export NVM_DIR="$HOME/.nvm" && \
+RUN export NVM_DIR="/root/.nvm" && \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash && \
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
-    nvm install 12 && \
-    nvm use 12 && \
-    nvm alias default 12 && \
-    echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
-    echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> ~/.bashrc && \
-    echo 'export PATH="/root/.nvm/versions/node/v12.22.12/bin:$PATH"' >> ~/.bashrc
+    nvm install 12.22.12 && \
+    nvm use 12.22.12 && \
+    nvm alias default 12.22.12 && \
+    ln -sf $NVM_DIR/versions/node/v12.22.12/bin/node /usr/bin/node && \
+    ln -sf $NVM_DIR/versions/node/v12.22.12/bin/npm /usr/bin/npm
 COPY daemon_initialize.sh /daemon_initialize.sh
 COPY check-health.sh /check-health.sh
 RUN chmod 755 daemon_initialize.sh check-health.sh
