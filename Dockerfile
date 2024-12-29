@@ -27,7 +27,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | b
     nvm alias default 12 && \
     echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
     echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> ~/.bashrc && \
-    echo 'export PATH="$NVM_DIR/versions/node/12/bin:$PATH"' >> ~/.bashrc
+    echo 'export PATH="/root/.nvm/versions/node/v12.22.12/bin:$PATH"' >> ~/.bashrc
 COPY daemon_initialize.sh /daemon_initialize.sh
 COPY check-health.sh /check-health.sh
 RUN chmod 755 daemon_initialize.sh check-health.sh
