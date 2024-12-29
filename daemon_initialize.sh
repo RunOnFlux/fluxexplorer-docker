@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 #color codes
 RED='\033[1;31m'
 YELLOW='\033[1;33m'
