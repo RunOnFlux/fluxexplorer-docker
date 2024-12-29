@@ -22,7 +22,12 @@ RUN touch ~/.bashrc && chmod +x ~/.bashrc
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash && \
     export NVM_DIR="$HOME/.nvm" && \
     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
-    nvm install 12
+    nvm install 12 && \
+    nvm use 12 && \
+    nvm alias default 12 && \
+    echo 'export NVM_DIR="$HOME/.nvm"' >> ~/.bashrc && \
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> ~/.bashrc && \
+    bash -c "source ~/.bashrc && node -v && npm -v"
 COPY daemon_initialize.sh /daemon_initialize.sh
 COPY check-health.sh /check-health.sh
 RUN chmod 755 daemon_initialize.sh check-health.sh
