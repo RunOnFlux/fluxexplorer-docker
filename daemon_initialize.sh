@@ -227,7 +227,7 @@ EOF
     echo -e "testnet=1" >> flux.conf
     echo -e "addnode=testnet.runonflux.io" >> flux.conf
   else
-   echo -e "addnode=explorer.zelcash.online" >> flux.conf
+   echo -e "addnode=explorerb.app.runonflux.io" >> flux.conf
    echo -e "addnode=explorer.runonflux.io" >> flux.conf
    echo -e "addnode=blockbook.runonflux.io" >> flux.conf
    echo -e "addnode=explorer.flux.zelcore.io" >> flux.conf
