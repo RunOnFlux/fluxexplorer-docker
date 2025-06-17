@@ -227,9 +227,53 @@ EOF
     echo -e "testnet=1" >> flux.conf
     echo -e "addnode=testnet.runonflux.io" >> flux.conf
   else
-   echo -e "addnode=explorer.runonflux.io" >> flux.conf
-   echo -e "addnode=blockbook.runonflux.io" >> flux.conf
-   echo -e "addnode=explorer.flux.zelcore.io" >> flux.conf
+    echo -e "addnode=65.108.10.80" >> flux.conf
+    echo -e "addnode=65.21.130.135" >> flux.conf
+    echo -e "addnode=95.217.207.214" >> flux.conf
+    echo -e "addnode=38.242.223.230" >> flux.conf
+    echo -e "addnode=24.120.133.162" >> flux.conf
+    echo -e "addnode=192.99.13.138" >> flux.conf
+    echo -e "addnode=192.99.13.217" >> flux.conf
+    echo -e "addnode=37.187.88.178" >> flux.conf
+    echo -e "addnode=46.38.251.220" >> flux.conf
+    echo -e "addnode=95.216.118.230" >> flux.conf
+    echo -e "addnode=94.23.203.53" >> flux.conf
+    echo -e "addnode=37.120.160.142" >> flux.conf
+    echo -e "addnode=95.216.20.115" >> flux.conf
+    echo -e "addnode=64.32.48.63" >> flux.conf
+    echo -e "addnode=64.32.48.62" >> flux.conf
+    echo -e "addnode=178.170.41.155" >> flux.conf
+    echo -e "addnode=38.88.125.54" >> flux.conf
+    echo -e "addnode=202.61.247.78" >> flux.conf
+    echo -e "addnode=65.109.49.58" >> flux.conf
+    echo -e "addnode=95.216.80.110" >> flux.conf
+    echo -e "addnode=65.108.72.80" >> flux.conf
+    echo -e "addnode=135.181.78.142" >> flux.conf
+    echo -e "addnode=149.154.176.10" >> flux.conf
+    echo -e "addnode=95.216.80.101" >> flux.conf
+    echo -e "addnode=65.21.96.218" >> flux.conf
+    echo -e "addnode=149.154.176.36" >> flux.conf
+    echo -e "addnode=149.154.176.14" >> flux.conf
+    echo -e "addnode=65.108.195.28" >> flux.conf
+    echo -e "addnode=89.58.26.195" >> flux.conf
+    echo -e "addnode=206.123.157.99" >> flux.conf
+    echo -e "addnode=65.108.192.93" >> flux.conf
+    echo -e "addnode=65.108.192.94" >> flux.conf
+    echo -e "addnode=65.108.192.92" >> flux.conf
+    echo -e "addnode=65.21.27.203" >> flux.conf
+    echo -e "addnode=65.21.194.31" >> flux.conf
+    echo -e "addnode=65.108.197.165" >> flux.conf
+    echo -e "addnode=65.108.197.175" >> flux.conf
+    echo -e "addnode=65.108.197.159" >> flux.conf
+    echo -e "addnode=65.21.81.154" >> flux.conf
+    echo -e "addnode=65.109.112.153" >> flux.conf
+    echo -e "addnode=65.108.231.131" >> flux.conf
+    echo -e "addnode=65.108.231.179" >> flux.conf
+    echo -e "addnode=45.155.173.104" >> flux.conf
+    echo -e "addnode=65.21.129.71" >> flux.conf
+    echo -e "addnode=65.109.90.136" >> flux.conf
+    echo -e "addnode=162.55.241.211" >> flux.conf
+    echo -e "addnode=65.109.121.74" >> flux.conf
   fi
 
   if [[ "$BOOTSTRAP" == "1" ]]; then
