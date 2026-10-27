@@ -36,35 +36,39 @@ if [[ -n $(find "$DATA" ! -user explorer -print -quit) ]]; then
   chown -R explorer:explorer "$DATA"
 fi
 
-if [[ ! -f $CHAIN/flux.conf ]]; then
-  log "writing $CHAIN/flux.conf"
-  {
-    echo "server=1"
-    echo "txindex=1"
-    echo "addressindex=1"
-    echo "timestampindex=1"
-    echo "spentindex=1"
-    echo "insightexplorer=1"
-    echo "experimentalfeatures=1"
-    echo "zmqpubrawtx=tcp://127.0.0.1:28332"
-    echo "zmqpubhashblock=tcp://127.0.0.1:28332"
-    echo "rpcport=16124"
-    echo "rpcbind=127.0.0.1"
-    echo "rpcallowip=127.0.0.1"
-    echo "rpcuser=explorer"
-    echo "rpcpassword=$(head -c 32 /dev/urandom | base64 | tr -dc 'A-Za-z0-9')"
-    echo "rpcworkqueue=1100"
-    echo "uacomment=bitcore"
-    echo "mempoolexpiry=24"
-    echo "maxmempool=2000"
-    echo "dbcache=1000"
-    echo "maxtxfee=1.0"
-    echo "dbmaxfilesize=64"
-    echo "showmetrics=0"
-    if [[ $NETWORK == testnet ]]; then echo "testnet=1"; fi
-  } | as_explorer tee "$CHAIN/flux.conf" >/dev/null
-  chmod 600 "$CHAIN/flux.conf"
-fi
+# Written on every start, so a new image's settings reach an existing volume; the RPC password is
+# kept from the previous file. maxconnections: an explorer only follows the chain. rpcworkqueue and
+# rpcthreads take bitcore-node's calls in flight (rpcqueue in bitcore-node.json) with room to spare.
+password=
+if [[ -f $CHAIN/flux.conf ]]; then password=$(sed -n 's/^rpcpassword=//p' "$CHAIN/flux.conf"); fi
+[[ -n $password ]] || password=$(head -c 32 /dev/urandom | base64 | tr -dc 'A-Za-z0-9')
+log "writing $CHAIN/flux.conf"
+{
+  echo "server=1"
+  echo "txindex=1"
+  echo "addressindex=1"
+  echo "timestampindex=1"
+  echo "spentindex=1"
+  echo "insightexplorer=1"
+  echo "experimentalfeatures=1"
+  echo "zmqpubrawtx=tcp://127.0.0.1:28332"
+  echo "zmqpubhashblock=tcp://127.0.0.1:28332"
+  echo "rpcport=16124"
+  echo "rpcbind=127.0.0.1"
+  echo "rpcallowip=127.0.0.1"
+  echo "rpcuser=explorer"
+  echo "rpcpassword=$password"
+  echo "rpcworkqueue=128"
+  echo "rpcthreads=8"
+  echo "dbcache=450"
+  echo "maxconnections=32"
+  echo "uacomment=bitcore"
+  echo "maxtxfee=1.0"
+  echo "showmetrics=0"
+  if [[ $NETWORK == testnet ]]; then echo "testnet=1"; fi
+} | as_explorer tee "$CHAIN/flux.conf.new" >/dev/null
+chmod 600 "$CHAIN/flux.conf.new"
+mv "$CHAIN/flux.conf.new" "$CHAIN/flux.conf"
 
 if [[ ${BOOTSTRAP:-0} == 1 && ! -d $BLOCKS ]]; then
   as_explorer touch "$MARKER"
@@ -106,7 +110,7 @@ jq -n --arg network "$NETWORK" --arg chain "$CHAIN" --arg fluxd "$(command -v fl
       spawn: {
         datadir: $chain,
         exec: $fluxd,
-        rpcqueue: 1000,
+        rpcqueue: 64,
         rpcport: 16124,
         zmqpubrawtx: "tcp://127.0.0.1:28332",
         zmqpubhashblock: "tcp://127.0.0.1:28332"
@@ -126,5 +130,7 @@ as_explorer ln -sfn /opt/explorer/node_modules "$DATA/node_modules"
 
 cd "$DATA"
 log "starting bitcore-node"
+# A heap limit makes node, not fluxd, the process that stops when memory runs out.
 exec setpriv --reuid=explorer --regid=explorer --init-groups -- env HOME=/home/explorer \
-  node /opt/explorer/node_modules/@runonflux/bitcore-node/bin/bitcore-node start
+  node --max-old-space-size="${NODE_HEAP_MB:-1536}" \
+  /opt/explorer/node_modules/@runonflux/bitcore-node/bin/bitcore-node start
