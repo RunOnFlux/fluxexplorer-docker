@@ -1,0 +1,14 @@
+{
+  "name": "flux-explorer-image",
+  "private": true,
+  "dependencies": {
+    "@runonflux/bitcore-node": "4.0.2",
+    "@runonflux/insight-api": "2.0.1",
+    "@runonflux/insight-ui": "2.0.1"
+  },
+  "allowScripts": {
+    "zeromq": true,
+    "bufferutil": true,
+    "utf-8-validate": true
+  }
+}

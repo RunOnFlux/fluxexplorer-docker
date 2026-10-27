@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
-if [[ "$NETWORK" == "1" ]]; then
-  CURRENT_NODE_HEIGHT=$(flux-cli -testnet -datadir=/data/bitcore-node/bin/mynode/data getinfo | jq '.blocks')
-else
-  CURRENT_NODE_HEIGHT=$(flux-cli -datadir=/data/bitcore-node/bin/mynode/data getinfo | jq '.blocks')
-fi
-if ! egrep -o "^[0-9]+$" <<< "$CURRENT_NODE_HEIGHT" &>/dev/null; then
-  echo "Daemon not working correct..."
-  exit 1
-else
-  echo "Daemon working correct..."
-  exit
-fi
+# Healthy when the explorer's API answers. While the bootstrap downloads, or fluxd is loading or
+# catching up before bitcore-node serves, a fluxd that answers RPC is enough.
+set -uo pipefail
+
+DATA=/data/explorer
+
+[[ -e $DATA/.bootstrapping ]] && exit 0
+curl -sf -m 10 http://127.0.0.1:3001/api/sync >/dev/null && exit 0
+flux-cli -conf="$DATA/data/flux.conf" -datadir="$DATA/data" getblockcount >/dev/null 2>&1
