@@ -107,6 +107,7 @@ jq -n --arg network "$NETWORK" --arg chain "$CHAIN" --arg fluxd "$(command -v fl
     web: {disablePolling: false, enableSocketRPC: false},
     bitcoind: {
       sendTxLog: ($chain + "/pushtx.log"),
+      shutdownTimeout: 60000,
       spawn: {
         datadir: $chain,
         exec: $fluxd,

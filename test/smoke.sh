@@ -55,7 +55,7 @@ password=$(docker exec explorer sed -n 's/^rpcpassword=//p' /data/explorer/data/
 docker exec explorer sed -i 's/^dbcache=.*/dbcache=1/' /data/explorer/data/flux.conf
 docker restart -t 120 explorer >/dev/null
 for _ in $(seq 1 60); do
-  docker exec explorer check-health.sh >/dev/null 2>&1 && break
+  docker exec explorer curl -sf -m 5 http://127.0.0.1:3001/api/sync >/dev/null 2>&1 && break
   sleep 5
 done
 [[ $(docker exec explorer sed -n 's/^rpcpassword=//p' /data/explorer/data/flux.conf) == "$password" ]] \
