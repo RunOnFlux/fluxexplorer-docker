@@ -26,6 +26,14 @@ done
 docker exec explorer check-health.sh >/dev/null 2>&1 || fail "the health check never passed"
 echo "health check passes"
 
+# bitcore-node has started every service once the API answers
+for _ in $(seq 1 60); do
+  docker exec explorer curl -sf -m 5 http://127.0.0.1:3001/api/sync >/dev/null 2>&1 && break
+  sleep 5
+done
+sync=$(docker exec explorer curl -sf -m 5 http://127.0.0.1:3001/api/sync) || fail "the API never answered"
+echo "the API answers: $sync"
+
 config=$(docker exec explorer cat /data/explorer/bitcore-node.json)
 [[ $(jq -r '.network' <<<"$config") == livenet ]] || fail "network is not livenet"
 [[ $(jq -r '.servicesConfig["insight-api"].db.host' <<<"$config") == "$DB" ]] || fail "database host is not $DB"
