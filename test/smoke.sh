@@ -65,6 +65,8 @@ echo "a restart keeps the RPC password and rewrites the settings"
 
 docker stop -t 120 explorer >/dev/null
 [[ $(docker inspect explorer --format '{{.State.ExitCode}}') == 0 ]] || fail "non-zero exit on stop"
-docker cp explorer:/data/explorer/data/debug.log - | tar -xO | grep -q 'Shutdown: done' \
-  || fail "fluxd did not shut down cleanly"
+debuglog=$(mktemp)
+docker cp explorer:/data/explorer/data/debug.log "$debuglog" || fail "fluxd's debug.log could not be read"
+grep -q 'Shutdown: done' "$debuglog" || { tail -5 "$debuglog"; fail "fluxd did not shut down cleanly"; }
+rm -f "$debuglog"
 echo "stops cleanly: exit 0, fluxd logged its shutdown"
