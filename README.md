@@ -16,11 +16,13 @@ installs nothing, so a new image version is new code.
 | `BOOTSTRAP` | `1`: on a volume with no chain, stream the bootstrap archive into fluxd's datadir before the first start | off |
 | `BOOTSTRAP_URL` | the archive | `https://cdn-geo.runonflux.io/apps/fluxshare/getfile/flux_explorer_bootstrap.tar.gz` |
 | `TESTNET` | `1`: testnet | `0` |
+| `NODE_HEAP_MB` | node's heap limit: node stops at it rather than fluxd being killed when memory runs out | `1536` |
 
 ## The volume
 
-`/data/explorer` holds `bitcore-node.json` (written on every start from the environment), fluxd's
-datadir `data/` and its `flux.conf` (written once, with a random RPC password). A volume from the
+`/data/explorer` holds `bitcore-node.json` and fluxd's datadir `data/` with its `flux.conf`, both
+written on every start (the image's settings, the environment); `flux.conf` keeps its random RPC
+password from one start to the next. A volume from the
 previous image keeps its chain: `/data/bitcore-node/bin/mynode/data` is moved to
 `/data/explorer/data` on the first start.
 
