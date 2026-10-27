@@ -16,10 +16,12 @@ permissions:
 # an image in the registry that nothing names.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/v') }}
 
+# Only a version tag publishes; every other run builds and tests the image locally.
 env:
   IMAGE: ghcr.io/runonflux/explorer
+  PUBLISH: ${{ startsWith(github.ref, 'refs/tags/v') }}
 
 # Actions are pinned to commits; the comment is the release each was resolved from.
 jobs:
@@ -31,7 +33,7 @@ jobs:
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
 
       - uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
-        if: github.event_name != 'pull_request'
+        if: env.PUBLISH == 'true'
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -41,7 +43,7 @@ jobs:
       # passed, not a second build of the same source.
       - name: Build and push by digest
         id: pushed
-        if: github.event_name != 'pull_request'
+        if: env.PUBLISH == 'true'
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: .
@@ -49,14 +51,14 @@ jobs:
           outputs: type=image,name=${{ env.IMAGE }},push-by-digest=true,name-canonical=true,push=true
 
       - name: Pull the image under test
-        if: github.event_name != 'pull_request'
+        if: env.PUBLISH == 'true'
         run: |
           reference="${IMAGE}@${{ steps.pushed.outputs.digest }}"
           docker pull "$reference"
           echo "IMAGE_UNDER_TEST=$reference" >> "$GITHUB_ENV"
 
       - name: Build the image
-        if: github.event_name == 'pull_request'
+        if: env.PUBLISH != 'true'
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: .
@@ -65,23 +67,21 @@ jobs:
           tags: explorer:test
 
       - name: Name the image under test
-        if: github.event_name == 'pull_request'
+        if: env.PUBLISH != 'true'
         run: echo "IMAGE_UNDER_TEST=explorer:test" >> "$GITHUB_ENV"
 
       - name: Smoke test
         run: test/smoke.sh "$IMAGE_UNDER_TEST"
 
       - id: meta
-        if: github.event_name != 'pull_request'
+        if: env.PUBLISH == 'true'
         uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
         with:
           images: ${{ env.IMAGE }}
-          tags: |
-            type=semver,pattern={{version}}
-            type=raw,value=master,enable={{is_default_branch}}
+          tags: type=semver,pattern={{version}}
 
       - name: Tag the digest that passed
-        if: github.event_name != 'pull_request'
+        if: env.PUBLISH == 'true'
         run: |
           docker buildx imagetools create \
             $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
