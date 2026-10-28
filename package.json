@@ -4,7 +4,7 @@
   "dependencies": {
     "@runonflux/bitcore-node": "4.0.3",
     "@runonflux/insight-api": "2.0.2",
-    "@runonflux/insight-ui": "2.0.1"
+    "@runonflux/insight-ui": "2.0.2"
   },
   "allowScripts": {
     "zeromq": true,
